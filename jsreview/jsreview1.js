@@ -236,14 +236,14 @@ console.log(kristynsCloset)
 function printGreeting (name){
   return "Hello there, " + name + "!";
 }
-console.log(printGreeting("Rasheem"));
+console.log(printGreeting("joshua"));
 
 
 
 function printCool (name){
  return name + " is super cool!";
 }
-console.log(printCool('Akili'));
+console.log(printCool('kyrie irving'));
 
 
 
