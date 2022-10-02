@@ -1,35 +1,42 @@
-//require modules
+// load express
 const express = require('express');
 
-//create express app
-const app = express();
 const methodOverride = require('method-override');
-const mongoose  = require('mongoose');
-const dotenv = require('dotenv')
+
+// bring in mongoConfig
+const mongoConfig = require('./config')
+
+// establish port
 require('dotenv').config()
 
-const Port = process.env.PORT
-//configure the app(app.set)
+// create express app
+const app = express();
 
+// bring in packaged route
+const logRoutes = require('./routes/logRoutes');
+
+// port
+const port = process.env.PORT;
+
+
+// setup our view engine
 app.set('view engine', 'jsx');
 app.engine('jsx', require('express-react-views').createEngine());
 
+// middleware
+app.use(express.urlencoded({extended:false}))
+app.use(express.static("public"))
+app.use(express.json())
+app.use(methodOverride("_method"))
 
-//mount the middleware(app.use)
 
+app.use('/logs', logRoutes);
 
-//mount routes
-app.get('/', function(req, res) {
-    res.send('<h1>Hello Express</h1>');
-});
-
-app.get('/new', function(req, res) {
-    res.render('new')
+//listen to port
+app.listen(port, () => {
+    console.log('listening on port: ', port)
 })
 
-//PORT = 3000
 
-//tell app to listen on port 3000
-app.listen(3000, function () {
-    console.log('listening on port 3000');
-});
+mongoConfig()
+
